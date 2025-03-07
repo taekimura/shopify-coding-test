@@ -82,7 +82,7 @@ if (!customElements.get('product-form')) {
                 'modalClosed',
                 () => {
                   setTimeout(() => {
-                    CartPerformance.measure("add:paint-updated-sections", () => {
+                    CartPerformance.measure('add:paint-updated-sections', () => {
                       this.cart.renderContents(response);
                     });
                   });
@@ -91,7 +91,7 @@ if (!customElements.get('product-form')) {
               );
               quickAddModal.hide(true);
             } else {
-              CartPerformance.measure("add:paint-updated-sections", () => {
+              CartPerformance.measure('add:paint-updated-sections', () => {
                 this.cart.renderContents(response);
               });
             }
@@ -105,7 +105,7 @@ if (!customElements.get('product-form')) {
             if (!this.error) this.submitButton.removeAttribute('aria-disabled');
             this.querySelector('.loading__spinner').classList.add('hidden');
 
-            CartPerformance.measureFromEvent("add:user-action", evt);
+            CartPerformance.measureFromEvent('add:user-action', evt);
           });
       }
 
@@ -124,11 +124,23 @@ if (!customElements.get('product-form')) {
         }
       }
 
-      toggleSubmitButton(disable = true, text) {
-        if (disable) {
+      toggleSubmitButton(disable = null, text) {
+        if (disable === null || disable === undefined) {
           this.submitButton.setAttribute('disabled', 'disabled');
-          if (text) this.submitButtonText.textContent = text;
+          this.submitButton.classList.remove('sold-out', 'available');
+          this.submitButtonText.textContent = 'Loading...';
+          return;
+        }
+        if (disable) {
+          this.submitButton.classList.remove('available');
+          this.submitButton.classList.add('sold-out');
+          this.submitButton.setAttribute('disabled', 'disabled');
+          if (text) {
+            this.submitButtonText.textContent = text;
+          }
         } else {
+          this.submitButton.classList.remove('sold-out');
+          this.submitButton.classList.add('available');
           this.submitButton.removeAttribute('disabled');
           this.submitButtonText.textContent = window.variantStrings.addToCart;
         }

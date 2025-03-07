@@ -206,6 +206,21 @@ product-info {
 }
 
 /* Overrides */
+.sold-out {
+  background-color: red;
+  color: white;
+}
+
+.available {
+  background-color: green;
+  color: white;
+}
+
+.available:hover {
+  background-color: blue;
+  cursor: pointer;
+}
+
 .shopify-payment-button__more-options {
   color: rgb(var(--color-foreground));
 }
@@ -1209,7 +1224,7 @@ a.product__text {
 }
 
 .product__inventory .icon-inventory-status circle:first-of-type {
-  opacity: .3;
+  opacity: 0.3;
 }
 
 /* Icon with text */
