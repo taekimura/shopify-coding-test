@@ -27,6 +27,8 @@ if (!customElements.get('product-info')) {
 
         this.initQuantityHandlers();
         this.dispatchEvent(new CustomEvent('product-info:loaded', { bubbles: true }));
+
+        this.updateStockStatus();
       }
 
       addPreProcessCallback(callback) {
@@ -77,6 +79,26 @@ if (!customElements.get('product-info')) {
             ? this.handleSwapProduct(productUrl, shouldFetchFullPage)
             : this.handleUpdateProductInfo(productUrl),
         });
+
+        this.updateStockStatus();
+      }
+
+      updateStockStatus() {
+        const selectedInput =
+          this.querySelector('[data-inventory-quantity]:checked') || this.querySelector('[data-inventory-quantity]');
+        const statusElement = this.querySelector('.inventory-status');
+
+        if (selectedInput && statusElement) {
+          const inventory = parseInt(selectedInput.getAttribute('data-inventory-quantity'), 10);
+
+          if (inventory === 0) {
+            statusElement.textContent = '';
+          } else if (inventory < 5) {
+            statusElement.textContent = 'Low stock';
+          } else {
+            statusElement.textContent = 'Available!';
+          }
+        }
       }
 
       resetProductFormState() {

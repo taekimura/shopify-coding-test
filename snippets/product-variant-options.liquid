@@ -47,9 +47,11 @@
     {{ option.name }}-{{ option.position }}
   {%- endcapture -%}
 
+  {%- assign variant_for_value = product.variants | where: 'option1', value | first -%}
   {%- capture input_dataset -%}
     data-product-url="{{ value.product_url }}"
     data-option-value-id="{{ value.id }}"
+    data-inventory-quantity="{{ variant_for_value.inventory_quantity }}"
   {%- endcapture -%}
 
   {%- capture label_unavailable -%}
