@@ -52,6 +52,7 @@
             picker_type: picker_type
           %}
         </fieldset>
+        <span>{{ product.selected_or_first_available_variant.metafields.custom.product_size }}</span>
       {%- else -%}
         <div class="product-form__input product-form__input--dropdown">
           <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
